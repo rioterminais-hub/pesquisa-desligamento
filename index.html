@@ -560,7 +560,7 @@
      Cole aqui a URL gerada pelo Google Apps Script após o deploy
      Exemplo: https://script.google.com/macros/s/XXXXXXXXX/exec
   ═══════════════════════════════════════════════════════════ */
-  var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwIuMAi0JIolyBVBTScfuN_-NKnwSHXoZEPnA39IPsOJtxxJh55wj2JMt4pEBblZbnP/exec";
+  var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzYUCNRH1Xalmt_V85AFvpdfgW6ILE7SCrOWzkKkHdMQK9qdmJyfD4T008FL7GlfF5yXw/exec";
 
   /* ── CAPA → FORM ── */
   document.getElementById("btn-iniciar").addEventListener("click", function() {
@@ -707,15 +707,11 @@
 
   /* ── ENVIAR PARA GOOGLE SHEETS ── */
   function enviarDados(rec) {
-    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbwIuMAi0JIolyBVBTScfuN_-NKnwSHXoZEPnA39IPsOJtxxJh55wj2JMt4pEBblZbnP/exec") {
-      console.warn("URL do Apps Script não configurada.");
-      return;
-    }
+    var params = new URLSearchParams();
+    params.append("data", JSON.stringify(rec));
     fetch(APPS_SCRIPT_URL, {
-      method:  "POST",
-      mode:    "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify(rec)
+      method: "POST",
+      body:   params
     }).catch(function(err) {
       console.error("Falha ao enviar resposta:", err);
     });
